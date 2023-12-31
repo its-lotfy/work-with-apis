@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+* {
+  @apply box-border;
+}
+
+body {
+  font-family: Vazir FD, sans-serif;
+  direction: rtl;
+}
+
+.gridvideo {
+  display: grid;
+  grid-template-columns: 80% 20%;
+  column-gap: 10px;
+}
+
+.mainside video {
+  width: 100%; 
+  height: 500px;
+  padding: 1rem;
+}
+
+.imgsideContainer {
+  margin-bottom: 1rem;
+  width: 100%;
+  display: block;
+}
+.imgside {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+}
+
+.catBarWrapper {
+  position: relative;
+  overflow: hidden;
+}
+.catBar {
+  display: flex;
+  align-items: flex-start;
+  padding: 10px 20px;
+  position: relative;
+  top: 0;
+  right: 0;
+  transition: right 2s ease;
+}
+.catBar-item {
+  color: rgb(244, 244, 244);
+  background-color: rgb(51, 51, 51);
+  border-radius: 10px;
+  padding: 3px;
+  margin: 0 10px;
+  flex: 0 0 fit-content;
+  cursor: pointer;
+}
+.arrowRight {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  background-color: red;
+  border-radius: 50%;
+  transform: translate(0, -50%);
+  z-index: 1;
+}
+.arrowLeft {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  background-color: red;
+  border-radius: 50%;
+  transform: translate(0, -50%);
+  z-index: 1;
+}
