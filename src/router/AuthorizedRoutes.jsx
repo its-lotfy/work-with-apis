@@ -5,16 +5,20 @@ import { Navigate } from "react-router-dom";
 import Logout from "@/features/user/Logout";
 import ShowVideo from "@/features/aparat/ShowVideo";
 import Video from "@/pages/aparat/Video";
-import Search from "@/pages/aparat/Search";
+// import Search from "@/pages/aparat/Search";
+import ErrorBoundary from "@/components/ErrorBoundry";
 
 export default [
   {
     element: <RootLayOut />,
-    errorElement: <Error />,
     children: [
       {
         path: "/",
-        element: <Search />,
+        // element: <Search />,
+        lazy: async () => {
+          let { Search } = await import("@/pages/aparat/Search");
+          return { Component: Search.default };
+        },
       },
       {
         path: "profile/:username",
@@ -23,12 +27,16 @@ export default [
 
       {
         path: "search",
-        element: <Search />,
+        // element: <Search />,
+        lazy: async () => {
+          let { Search } = await import("@/pages/aparat/Search");
+          return { Component: Search };
+        },
       },
       {
         path: "video",
-        element: <Video />,
 
+        element: <Video />,
         children: [
           {
             index: true,

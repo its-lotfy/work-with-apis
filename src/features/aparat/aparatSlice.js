@@ -7,9 +7,30 @@ import {
   apgetVideoesByTagApi,
   apgetVideosByCategoryApi,
 } from "@/API";
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { apiSlice } from "@/API/apiSlice";
+import {
+  createSlice,
+  createAsyncThunk,
+  createSelector,
+} from "@reduxjs/toolkit";
 
 //
+export const extendedAparatSlice = apiSlice.injectEndpoints({
+  endpoints: (bulider) => ({
+    get: bulider.query({
+      query: () => "/video",
+    }),
+  }),
+});
+// RTK query
+const result = extendedAparatSlice.endpoints.get.select();
+
+export const allvideos = createSelector(
+  result,
+  (results) => results?.data ?? []
+);
+
+// athync thunk
 const SearchMethods = {
   tag: "tag",
   category: "cat",
@@ -227,5 +248,9 @@ const aparatSlice = createSlice({
       });
   },
 });
+
+export const selectVideo1 = (state) => state.aparat.video;
+export const selectVideo = createSelector(selectVideo1, (video) => video);
 export const { clearVideo } = aparatSlice.actions;
 export default aparatSlice.reducer;
+export const { useGetQuery } = extendedAparatSlice;

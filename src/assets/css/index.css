@@ -17,9 +17,13 @@ body {
 }
 
 .mainside video {
-  width: 100%; 
+  width: 100%;
   height: 500px;
+  min-height: 500px;
   padding: 1rem;
+}
+.mainside .video {
+  min-height: 500px;
 }
 
 .imgsideContainer {

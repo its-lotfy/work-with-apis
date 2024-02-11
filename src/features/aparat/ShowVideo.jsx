@@ -2,29 +2,40 @@ import {
   apGetRelatedVideoes,
   apGetVideo,
   clearVideo,
+  selectVideo,
 } from "@/features/aparat/aparatSlice";
 import { shortNumber } from "@/utils/utils";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import watched from "@/assets/images/aparat/wached.png";
+import { useGetVideoQuery } from "@/API/apiSlice";
 
 const ShowVideo = () => {
   const { uid } = useParams();
+  console.log(uid);
+  const { data, isFetching, isSuccess, isLoading } = useGetVideoQuery(uid);
   const dispatch = useDispatch();
+  const [info, setInfo] = useState({});
+  // const video = useSelector(selectVideo);
 
-  const { video } = useSelector((state) => state.aparat);
-  const { info } = video;
+  // useEffect(() => {
+  //   // dispatch(apGetVideo(uid));
+  //   return () => {
+  //     dispatch(clearVideo());
+  //   };
+  // }, [uid]);
   useEffect(() => {
-    dispatch(apGetVideo(uid));
-    return () => {
-      dispatch(clearVideo());
-    };
-  }, [uid]);
+    if (isSuccess) {
+      setInfo(data.video);
+    }
+    dispatch(clearVideo());
+  }, [isFetching]);
+
   useEffect(() => {
     if (info.cat_id) {
       const relatedObject = {
-        category: info.cat_id,
+        // category: info.cat_id,
         title: info.title,
         tag: info.tag_str,
       };
@@ -35,15 +46,17 @@ const ShowVideo = () => {
   return (
     <section className="mainside">
       <div className="video relative">
-        <video
-          className="rounded-3xl w-full h-full"
-          controls
-          src={info.file_link}
-        >
-          <source src={info.file_link} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        {info.file_link ? (
+        {info.file_link && (
+          <video
+            className="rounded-3xl w-full h-full"
+            controls
+            src={info.file_link}
+          >
+            <source src={info.file_link} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        )}
+        {!isFetching ? (
           ""
         ) : (
           <div className="absolute top-0 left-0 bg-slate-500 animate-skelton w-full h-full rounded-3xl"></div>
