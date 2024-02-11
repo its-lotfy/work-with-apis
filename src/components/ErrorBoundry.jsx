@@ -16,7 +16,7 @@ class ErrorBoundary extends React.Component {
       // fallback UI
       return <h1>Something went wrong!</h1>;
     }
-
+    // comment
     return this.props.children;
   }
 }
